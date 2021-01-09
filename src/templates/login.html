@@ -1,18 +1,15 @@
 {% block body %}
-{# {% if session['logged_in'] %} #}
-{% if True %}
+{% if session['logged_in'] %}
 
 You're logged in already!
-
+<a href="/upload">Upload?</a>
 {% else %}
-Here you are!
-{% comment %}
+Log In
 <form action="/login" method="POST">
   <input type="username" name="username" placeholder="Username">
 <input type="password" name="password" placeholder="Password">
 <input type="submit" value="Log in">
-{% endcomment %}
-</form>}
+</form>
+
 {% endif %}
 {% endblock %}
-{% endraw %}

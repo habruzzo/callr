@@ -2,18 +2,19 @@ from flask import Flask, flash, redirect, render_template, request, session, abo
 import os
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/home/holden/proj-callr'
+UPLOAD_FOLDER = '/home/holden/proj-callr/uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.secret_key = os.urandom(12)
 
 @app.route('/')
 def home():
 	if not session.get('logged_in'):
 		return render_template('login.html')
 	else:
-		return "Hello Boss!"
+		return '''Hello do you want to <a href="/upload">upload</a>?'''
 
 @app.route('/login', methods=['POST'])
 def do_admin_login():
@@ -49,7 +50,3 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect('/save')
     return render_template('upload.html')
-
-
-if __name__ == "__main__":
-	app.secret_key = os.urandom(12)
